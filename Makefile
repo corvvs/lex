@@ -3,7 +3,7 @@ OBJDIR	:=	objs
 INCDIR	:=	includes
 FILES	:=	\
 			main.c\
-			libft.c\
+			tiny_libft.c\
 			input_section_parser.c\
 			input_parser.c\
 

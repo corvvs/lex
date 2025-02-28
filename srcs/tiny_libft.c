@@ -1,38 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	unsigned char		*ud;
-	const unsigned char	*us;
-
-	if (dst == src || n == 0)
-	{
-		return (dst);
-	}
-	ud = dst;
-	us = src;
-	while (n--)
-	{
-		*ud++ = *us++;
-	}
-	return (dst);
-}
-
-char	*ft_strndup(const char *s1, size_t n)
-{
-	const size_t	len = strnlen(s1, n);
-	char			*dup;
-
-	dup = malloc(sizeof(char) * (len + 1));
-	if (dup != NULL)
-	{
-		ft_memcpy(dup, s1, len);
-		dup[len] = '\0';
-	}
-	return (dup);
-}
-
 void	free_strarr(void **strs) {
 	size_t 	i  = 0;
 	while (strs[i] != NULL)
