@@ -3,3 +3,8 @@ ft_lex
 *.l
 objs
 lex.yy.c
+a.out
+
+# Added by cargo
+
+/target
