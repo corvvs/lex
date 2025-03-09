@@ -9,6 +9,10 @@ $(NAME):
 	$(CARGO) build
 #	$(CARGO) build --release
 
+release:
+	$(CARGO) build --release
+	cp target/release/$(NAME) .
+
 .PHONY:	clean
 clean:
 	$(CARGO) clean --profile $(PROFILE_DEV)

@@ -1,9 +1,7 @@
 use std::io::{self};
-use ft_lex::structures::{
-    input:: {
-        DefinitionItem, SectionDefinitions, RuleItem, SectionRules,
-        DefinitionItemType, RuleItemType,
-    }, Yo
+use ft_lex::structures::input:: {
+    DefinitionItem, SectionDefinitions, RuleItem, SectionRules,
+    DefinitionItemType, RuleItemType,
 };
 
 

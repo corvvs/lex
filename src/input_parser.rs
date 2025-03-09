@@ -2,12 +2,7 @@ use std::io::{self, Read};
 use std::fs::File;
 use ft_lex::structures::{
     Yo,
-
-    input:: {
-        InputParseState,
-        DefinitionItemType,
-        RuleItemType,
-    },
+    input::InputParseState,
 };
 
 mod section;
@@ -36,7 +31,7 @@ const SECTION_DELIMITER: &str = "%%";
 pub fn parse_input(yo: &mut Yo) -> io::Result<()> {
     // ファイル or stdin の内容を読み込み
     let content = read_input(yo.config.input_path.as_deref())?;
-    let mut pi = &mut yo.parsed_input;
+    let pi = &mut yo.parsed_input;
 
     // 行分割して yo.parsed_input.lines に格納
     pi.lines = content
@@ -84,12 +79,8 @@ pub fn parse_input(yo: &mut Yo) -> io::Result<()> {
                     pi.user_subroutines.start_line = i as u64;
                 }
 
-                if line == SECTION_DELIMITER {
-                    eprintln!("DEBUGERR: found {} in USER-SUBROUTINE SECTION", SECTION_DELIMITER);
-                    // エラーとする
-                    return Err(io::Error::new(io::ErrorKind::InvalidData, "Found %% in USER-SUBROUTINE SECTION"));
-                }
-                // 何も処理しない => i += 1 後
+                // NOTE: ユーザーサブルーチンにおける %% は特別な意味を持たない
+                pi.user_subroutines.end_line = (i + 1) as u64;
             }
         }
 
