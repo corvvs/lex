@@ -1,41 +1,21 @@
-SRCDIR	:=	srcs
-OBJDIR	:=	objs
-INCDIR	:=	includes
-FILES	:=	\
-			main.c\
-			tiny_libft.c\
-			input_section_parser.c\
-			input_parser.c\
-
-SRCS	:=	$(FILES:%.c=$(SRCDIR)/%.c)
-OBJS	:=	$(FILES:%.c=$(OBJDIR)/%.o)
-NAME	:=	ft_lex
-
-CC			:=	gcc
-CCOREFLAGS	=	-Wall -Wextra -Werror -O2 -I$(INCDIR)
-CFLAGS		=	$(CCOREFLAGS) -g -fsanitize=address -fsanitize=undefined
-RM			:=	rm -rf
+CARGO		:=	cargo
+NAME		:=  ft_lex
+PROFILE_DEV	:=	dev
 
 all:			$(NAME)
 
-$(OBJDIR)/%.o:	$(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJDIR)/%.o:	%.c
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(NAME):	$(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+.PHONY: $(NAME)
+$(NAME):
+	$(CARGO) build
+#	$(CARGO) build --release
 
 .PHONY:	clean
 clean:
-	$(RM) $(OBJDIR) $(LIBFT)
+	$(CARGO) clean --profile $(PROFILE_DEV)
 
 .PHONY:	fclean
-fclean:			clean
-	$(RM) $(NAME)
+fclean:
+	$(CARGO) clean
 
 .PHONY:	re
 re:				fclean all
