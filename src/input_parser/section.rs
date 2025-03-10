@@ -4,6 +4,7 @@ use ft_lex::structures::input:: {
     DefinitionItemType, RuleItemType,
 };
 
+use super::lex_re_tokenizer;
 
 const BEGIN_CODEBLOCK: &str           = "%{";
 const END_CODEBLOCK: &str             = "%}";
@@ -214,6 +215,17 @@ pub fn process_rules_item(lines: &Vec<String>, given_i: usize, rules: &mut Secti
         // "ルールの可能性がある"
         eprintln!("DEBUGINFO: ルールの可能性がある: {}", lines[i]);
         
+        // pos は実は真のスペースとは限らないので, 真面目にスペースを探す:
+        // 1. 1行目を正規表現トークナイズする
+        // 2. 裸の空白文字(`Blank`トークン)が出現するまでパースを試みる
+        //    - もし裸の空白文字がないままパースが終わった場合、ルールではないことになる
+        // 3. その後の空白文字をスキップして, 行中の '{' を探す
+        // 4. '{' が見つかれば複数行アクション, そうでなければ単一行アクション
+        let tokens = lex_re_tokenizer::tokenize_re(&lines[i]);
+        println!("{:?}", tokens);
+
+        
+
         // 行中の '{' を探す
         if let Some(open_brace_index) = lines[i][pos..].find('{') {
             // 複数行アクション
@@ -248,6 +260,9 @@ pub fn process_rules_item(lines: &Vec<String>, given_i: usize, rules: &mut Secti
             return Ok(i);
         } else {
             // 単一行アクション
+
+            // 正規表現部分
+
             items.push(RuleItem {
                 item_type: RuleItemType::Rule,
                 start_line: i as u64,

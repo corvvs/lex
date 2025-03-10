@@ -6,6 +6,10 @@ use ft_lex::structures::{
 };
 
 mod section;
+mod lex_nfa;
+mod span;
+mod lex_re_tokenizer;
+mod lex_re_parser;
 
 /// ファイルパスがあればそれを開き、なければstdinから読み取る
 fn read_input(path: Option<&str>) -> io::Result<String> {
